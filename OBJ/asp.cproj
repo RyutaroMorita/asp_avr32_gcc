@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC32.C</ToolchainName>
+    <ProjectGuid>b413c7f9-22c3-4e08-8a2b-2f6276230194</ProjectGuid>
+    <avrdevice>AT32UC3A3256</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>asp</AssemblyName>
+    <Name>asp</Name>
+    <RootNamespace>asp</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <BootSegment>2</BootSegment>
+    <ResetRule>0</ResetRule>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <EraseKey />
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.49.1" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
+    <avrtoolserialnumber>J41800113804</avrtoolserialnumber>
+    <avrdeviceexpectedsignature>0x0</avrdeviceexpectedsignature>
+    <avrtoolinterface>JTAG</avrtoolinterface>
+    <com_atmel_avrdbg_tool_atmelice>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagDbgClock>7500000</JtagDbgClock>
+        </InterfaceProperties>
+        <InterfaceName>JTAG</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
+      <ToolNumber>J41800113804</ToolNumber>
+      <ToolName>Atmel-ICE</ToolName>
+    </com_atmel_avrdbg_tool_atmelice>
+    <avrtoolinterfaceclock>7500000</avrtoolinterfaceclock>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <Avr32Gcc>
+        <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
+        <avr32gcc.common.outputfiles.lss>True</avr32gcc.common.outputfiles.lss>
+        <avr32gcc.common.outputfiles.eep>True</avr32gcc.common.outputfiles.eep>
+        <avr32gcc.common.outputfiles.srec>True</avr32gcc.common.outputfiles.srec>
+        <avr32gcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>NDEBUG</Value>
+          </ListValues>
+        </avr32gcc.compiler.symbols.DefSymbols>
+        <avr32gcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3A_DFP\1.0.53\include\AT32UC3A3256</Value>
+          </ListValues>
+        </avr32gcc.compiler.directories.IncludePaths>
+        <avr32gcc.compiler.optimization.level>Optimize for size (-Os)</avr32gcc.compiler.optimization.level>
+        <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
+        <avr32gcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avr32gcc.linker.libraries.Libraries>
+        <avr32gcc.linker.optimization.GarbageCollectUnusedSections>True</avr32gcc.linker.optimization.GarbageCollectUnusedSections>
+        <avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>
+        <avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>
+        <avr32gcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3A_DFP\1.0.53\include\AT32UC3A3256</Value>
+          </ListValues>
+        </avr32gcc.assembler.general.IncludePaths>
+        <avr32gcc.preprocessingassembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3A_DFP\1.0.53\include\AT32UC3A3256</Value>
+          </ListValues>
+        </avr32gcc.preprocessingassembler.general.IncludePaths>
+      </Avr32Gcc>
+    </ToolchainSettings>
+    <UsesExternalMakeFile>True</UsesExternalMakeFile>
+    <OutputDirectory />
+    <ExternalMakeFilePath>Makefile</ExternalMakeFilePath>
+    <BuildTarget>all</BuildTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <Avr32Gcc>
+        <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
+        <avr32gcc.common.outputfiles.lss>True</avr32gcc.common.outputfiles.lss>
+        <avr32gcc.common.outputfiles.eep>True</avr32gcc.common.outputfiles.eep>
+        <avr32gcc.common.outputfiles.srec>True</avr32gcc.common.outputfiles.srec>
+        <avr32gcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>DEBUG</Value>
+          </ListValues>
+        </avr32gcc.compiler.symbols.DefSymbols>
+        <avr32gcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3A_DFP\1.0.53\include\AT32UC3A3256</Value>
+          </ListValues>
+        </avr32gcc.compiler.directories.IncludePaths>
+        <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
+        <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcc.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcc.compiler.optimization.DebugLevel>
+        <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
+        <avr32gcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avr32gcc.linker.libraries.Libraries>
+        <avr32gcc.linker.optimization.GarbageCollectUnusedSections>True</avr32gcc.linker.optimization.GarbageCollectUnusedSections>
+        <avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>
+        <avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>
+        <avr32gcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3A_DFP\1.0.53\include\AT32UC3A3256</Value>
+          </ListValues>
+        </avr32gcc.assembler.general.IncludePaths>
+        <avr32gcc.assembler.debugging.DebugLevel>Default (-g)</avr32gcc.assembler.debugging.DebugLevel>
+        <avr32gcc.preprocessingassembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3A_DFP\1.0.53\include\AT32UC3A3256</Value>
+          </ListValues>
+        </avr32gcc.preprocessingassembler.general.IncludePaths>
+        <avr32gcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</avr32gcc.preprocessingassembler.debugging.DebugLevel>
+      </Avr32Gcc>
+    </ToolchainSettings>
+    <UsesExternalMakeFile>True</UsesExternalMakeFile>
+    <OutputDirectory />
+    <ExternalMakeFilePath>Makefile</ExternalMakeFilePath>
+    <BuildTarget>all</BuildTarget>
+    <CleanTarget>realclean</CleanTarget>
+  </PropertyGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+  <ItemGroup>
+    <Compile Include="cfg1_out.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="..\arch\avr32uc3_gcc\start.S">
+      <SubType>compile</SubType>
+      <Link>start.S</Link>
+    </Compile>
+    <Compile Include="kernel_cfg.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sample1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="..\library\log_output.c">
+      <SubType>compile</SubType>
+      <Link>log_output.c</Link>
+    </Compile>
+    <Compile Include="..\library\vasyslog.c">
+      <SubType>compile</SubType>
+      <Link>vasyslog.c</Link>
+    </Compile>
+    <Compile Include="..\library\t_perror.c">
+      <SubType>compile</SubType>
+      <Link>t_perror.c</Link>
+    </Compile>
+    <Compile Include="..\library\strerror.c">
+      <SubType>compile</SubType>
+      <Link>strerror.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\target_serial.c">
+      <SubType>compile</SubType>
+      <Link>target_serial.c</Link>
+    </Compile>
+    <Compile Include="..\syssvc\syslog.c">
+      <SubType>compile</SubType>
+      <Link>syslog.c</Link>
+    </Compile>
+    <Compile Include="..\syssvc\serial.c">
+      <SubType>compile</SubType>
+      <Link>serial.c</Link>
+    </Compile>
+    <Compile Include="..\syssvc\logtask.c">
+      <SubType>compile</SubType>
+      <Link>logtask.c</Link>
+    </Compile>
+    <Compile Include="..\arch\avr32uc3_gcc\prc_support.S">
+      <SubType>compile</SubType>
+      <Link>prc_support.S</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\target_config.c">
+      <SubType>compile</SubType>
+      <Link>target_config.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\target_timer.c">
+      <SubType>compile</SubType>
+      <Link>target_timer.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\ASF\avr32\boards\uc3_a3_xplained\init.c">
+      <SubType>compile</SubType>
+      <Link>init.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\ASF\avr32\drivers\flashc\flashc.c">
+      <SubType>compile</SubType>
+      <Link>flashc.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\ASF\avr32\drivers\gpio\gpio.c">
+      <SubType>compile</SubType>
+      <Link>gpio.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\ASF\avr32\drivers\intc\intc.c">
+      <SubType>compile</SubType>
+      <Link>intc.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\ASF\avr32\drivers\usart\usart.c">
+      <SubType>compile</SubType>
+      <Link>usart.c</Link>
+    </Compile>
+    <Compile Include="..\target\at32uc3a3_xpld_gcc\ASF\common\services\clock\uc3a3_a4\sysclk.c">
+      <SubType>compile</SubType>
+      <Link>sysclk.c</Link>
+    </Compile>
+    <Compile Include="..\arch\avr32uc3_gcc\prc_config.c">
+      <SubType>compile</SubType>
+      <Link>prc_config.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\startup.c">
+      <SubType>compile</SubType>
+      <Link>startup.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\task.c">
+      <SubType>compile</SubType>
+      <Link>task.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\wait.c">
+      <SubType>compile</SubType>
+      <Link>wait.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\time_event.c">
+      <SubType>compile</SubType>
+      <Link>time_event.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\task_manage.c">
+      <SubType>compile</SubType>
+      <Link>task_manage.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\task_refer.c">
+      <SubType>compile</SubType>
+      <Link>task_refer.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\task_sync.c">
+      <SubType>compile</SubType>
+      <Link>task_sync.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\task_except.c">
+      <SubType>compile</SubType>
+      <Link>task_except.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\semaphore.c">
+      <SubType>compile</SubType>
+      <Link>semaphore.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\eventflag.c">
+      <SubType>compile</SubType>
+      <Link>eventflag.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\dataqueue.c">
+      <SubType>compile</SubType>
+      <Link>dataqueue.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\pridataq.c">
+      <SubType>compile</SubType>
+      <Link>pridataq.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\mailbox.c">
+      <SubType>compile</SubType>
+      <Link>mailbox.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\mempfix.c">
+      <SubType>compile</SubType>
+      <Link>mempfix.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\time_manage.c">
+      <SubType>compile</SubType>
+      <Link>time_manage.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\cyclic.c">
+      <SubType>compile</SubType>
+      <Link>cyclic.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\alarm.c">
+      <SubType>compile</SubType>
+      <Link>alarm.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\sys_manage.c">
+      <SubType>compile</SubType>
+      <Link>sys_manage.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\interrupt.c">
+      <SubType>compile</SubType>
+      <Link>interrupt.c</Link>
+    </Compile>
+    <Compile Include="..\kernel\exception.c">
+      <SubType>compile</SubType>
+      <Link>exception.c</Link>
+    </Compile>
+    <Compile Include="..\syssvc\banner.c">
+      <SubType>compile</SubType>
+      <Link>banner.c</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

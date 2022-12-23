@@ -1,0 +1,6 @@
+/arch/avr32uc3_gcc/UC3A_DFP/
+/arch/avr32uc3_gcc/start.S
+/target/at32uc3a3_xpld_gcc/ASF/
+/target/at32uc3a3_xpld_gcc/config/
+/target/at32uc3a3_xpld_gcc/asf.h
+/target/at32uc3a3_xpld_gcc/at32uc3a3_xpld.ld
