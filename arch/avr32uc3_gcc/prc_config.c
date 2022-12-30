@@ -142,3 +142,15 @@ default_int_handler(void)
     target_exit();
 }
 #endif /* OMIT_DEFAULT_INT_HANDLER */
+
+#ifndef OMIT_DEFAULT_EXC_HANDLER
+/*
+ *  –¢“o˜^‚Ì—áŠO‚ª”­¶‚µ‚½ê‡‚ÉŒÄ‚Ño‚³‚ê‚é
+ */
+void
+default_exc_handler(void)
+{
+    syslog(LOG_EMERG, "\nUnregistered Exception occurs.");
+    target_exit();
+}
+#endif /* OMIT_DEFAULT_INT_HANDLER */

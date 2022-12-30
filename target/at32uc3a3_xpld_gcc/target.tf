@@ -18,6 +18,7 @@ $
 $  DEF_INT／DEF_EXCで使用できる割込みハンドラ番号／CPU例外ハンドラ番号
 $
 $INHNO_DEFINH_VALID = INHNO_VALID$
+$EXCNO_DEFEXC_VALID = { 0,1,...,10;12,13,...,16;20;24;28;64 }$
 
 $
 $  CFG_INTで使用できる割込み番号と割込み優先度

@@ -18,7 +18,7 @@
 #define call_exit_kernel			_kernel_call_exit_kernel
 #define start_r						_kernel_start_r
 #define ret_int						_kernel_ret_int
-#define exchdr_entry				_kernel_exchdr_entry
+//#define exchdr_entry				_kernel_exchdr_entry
 #define lock_flag					_kernel_lock_flag
 #define saved_iipm					_kernel_saved_iipm
 #define int_sp						_kernel_int_sp
@@ -42,7 +42,7 @@
 #define _call_exit_kernel			__kernel_call_exit_kernel
 #define _start_r					__kernel_start_r
 #define _ret_int					__kernel_ret_int
-#define _exchdr_entry				__kernel_exchdr_entry
+//#define _exchdr_entry				__kernel_exchdr_entry
 #define _lock_flag					__kernel_lock_flag
 #define _saved_iipm					__kernel_saved_iipm
 #define _int_sp						__kernel_int_sp

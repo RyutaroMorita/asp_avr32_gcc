@@ -382,38 +382,13 @@ extern void	start_r(void);
 #define OMIT_CALLTEX
 
 /*
- *  例外ベクタテーブルの構造の定義
- */
-typedef struct exc_vector_entry {
-	FP		exc_handler;		/* 例外ハンドラの起動番地 */
-} EXCVE;
-
-/*
- *  割込みハンドラ番号とCPU例外ハンドラ番号の範囲の判定
- */
-#define VALID_EXCNO_DEFEXC(excno)	((0x02U <= (excno) && (excno) <= 0x0fU) \
-									|| (0x20U <= (excno) && (excno) <= 0x3fU))
-
-/*
- *  CPU例外ハンドラの設定
- *
- *  ベクトル番号excnoのCPU例外ハンドラの出入口処理の番地をexc_entryに設
- *  定する．
- */
-Inline void
-x_define_exc(EXCNO excno, FP exc_entry)
-{
-	//
-}
-
-/*
  *  割込みハンドラの出入口処理の生成
  */
 
 /*
  *  割込みハンドラの出入口処理のラベルを作るマクロ
  */
-#define INT_ENTRY(inhno, inthdr)    inthdr
+#define INT_ENTRY(inhno, inthdr)	inthdr
 
 /*
  *  LOG_INH_ENTERがマクロ定義されている場合に，CALL_LOG_INH_ENTERを，
@@ -431,6 +406,20 @@ x_define_exc(EXCNO excno, FP exc_entry)
 #define INTHDR_ENTRY(inhno, inhno_num, inthdr) extern void inthdr(void);
 
 /*
+ *  CPU例外ハンドラの出入口処理の生成
+ */
+
+/*
+ *  CPU例外ハンドラの出入口処理のラベルを作るマクロ
+ */
+#define EXC_ENTRY(excno, exchdr)	exchdr
+
+/*
+ *  CPU例外ハンドラの出入口処理
+ */
+#define EXCHDR_ENTRY(excno, excno_num, exchdr) extern void exchdr(void *p_excinf);
+
+/*
  *  CPU例外の発生した時のコンテキストの参照
  *
  *  CPU例外の発生した時のコンテキストが，タスクコンテキストの時にfalse，
@@ -439,7 +428,10 @@ x_define_exc(EXCNO excno, FP exc_entry)
 Inline bool_t
 exc_sense_context(void *p_excinf)
 {
-	return((*((uint16_t *) p_excinf) & 0x1000U) == 0U);
+	/*
+	 *  ネストカウンタが1より大なら非タスクコンテキスト
+	 */
+	return (int_cnt > 1U);
 }
 
 /*
@@ -449,7 +441,10 @@ exc_sense_context(void *p_excinf)
 Inline uint16_t
 exc_get_iipm(void *p_excinf)
 {
-	return(*((uint16_t *) p_excinf) & 0x0700U);
+	uint32_t iipm = *((uint32_t *) p_excinf);
+	iipm = iipm & 0x001E0000UL;
+	iipm /= 0x10000UL;
+	return (uint16_t)iipm;
 }
 
 /*

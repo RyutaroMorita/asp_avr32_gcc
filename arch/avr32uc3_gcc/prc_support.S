@@ -287,6 +287,7 @@ inthdr_entry_0_d:
 
 inthdr_entry_0:
 	call	_get_interrupt_handler
+
 	cp.w	r12, 0
 	brne	inthdr_entry_1
 
@@ -313,10 +314,10 @@ inthdr_entry_1:
 	.text
 	.globl ret_int
 ret_int:
-	lda.w	r9, int_cnt					/* 割込みモードに */
+	lda.w	r9, int_cnt					/* 戻り先が割込みモードなら */
 	ld.w	r8, r9[0]
 	sub		r8, 1
-	st.w	r9[0], r8					/* 戻り先が割込みモードなら */
+	st.w	r9[0], r8
 	brne	ret_int_1_d					/*           すぐにリターン */
 
 	/*
@@ -460,3 +461,141 @@ ret_int_5:
 	mov		r10, 0
 	st.w	r9[0], r10
 	rete
+
+/*
+ *  CPU例外ハンドラ出入口処理
+ *
+ *  exchdr_entryは，CPU例外が発生した時に実行するルーチンで，EXCHDR_ENTRY
+ *  マクロで展開するCPU例外ハンドラの入口処理から，CPU例外ハンドラの番地を
+ *  r12に入れて分岐してくる．
+ *
+ *  CPU例外ハンドラは，非タスクコンテキストで実行する．そのため，CPU例
+ *  外ハンドラを呼び出す前に割込みモードに移行し，リターンしてきた後に
+ *  元のモードに戻す．元のモードに戻すために，割込みモードに移行する前
+ *  のSRを割込みスタック上に保存する（リターン先のSRを参照する手もある
+ *  が，タスクスタック上に保存される場合があり，参照するのが面倒）．
+ */
+	.text
+/*
+ *  例外エントリ（r12に例外番号が入る）
+ */
+	.globl exchdr_entry
+exchdr_entry:
+	lda.w	r9, int_cnt					/* 割込みモードに */
+	ld.w	r8, r9[0]
+	sub		r8, -1
+	st.w	r9[0], r8
+	cp.w	r8, 1
+	brne	exchdr_entry_0_d			/* 加算前が0でなければ多重割込み */
+
+	lda.w	r9, int_sp
+	st.w	r9[0], sp
+	lda.w	r8, _kernel_istkpt			/* 割込み用のスタックへ切替え */
+	ld.w	sp, r8[0]
+	rjmp	exchdr_entry_0
+
+exchdr_entry_0_d:
+	rjmp	exchdr_entry_0
+
+exchdr_entry_0:
+	movh	r9, 0x001E
+	mfsr	r10, AVR32_SR
+	pushm	r10							/* 例外発生前のsrを退避 */
+	mov		r11, sp						/* srの保存先をr11へ */
+	and		r9, r10
+	movh	r10, IIPM_LOCK_H			/* IPMがINT_IPM(TMIN_INTPRI) */
+	cp.w	r9, r10						/*    より小さければ，カーネル */
+	brcs	exchdr_entry_2				/*    管理のCPU例外の処理へ */
+
+	/*
+	 *  カーネル管理外のCPU例外ハンドラの呼出し
+	 */
+	lda.w	r8, lock_flag				/* 元のlock_flagをスタックに保存 */
+	ld.w	r10, r8[0]
+	pushm	r10
+	pushm	r11							/* srの保存先を退避 */
+//	pushm	r12							/* 例外番号の退避 */
+	call	target_get_exception_handler
+
+	cp.w	r12, 0
+	brne	exchdr_entry_1
+
+	call	default_exc_handler
+
+exchdr_entry_1:
+	mov		r8, r12
+	popm	r12							/* srの保存先を復帰 */
+	icall	r8
+
+	popm	r10							/* lock_flagを元に戻す */
+	lda.w	r8, lock_flag
+	st.w	r8[0], r10
+	popm	r10							/* 例外発生前のsrを復帰 */
+	mtsr	AVR32_SR, r10
+	lda.w	r9, int_sp					/* マスタモードに（スタック切換え） */
+	ld.w	sp, r9[0]
+	rete
+
+	/*
+	 *  カーネル管理のCPU例外ハンドラの呼出し
+	 */
+exchdr_entry_2:
+	popm	r10							/* 例外発生前のsrを復帰 */
+	pushm	r11							/* srの保存先を退避 */
+	call	target_get_exception_handler
+
+	cp.w	r12, 0
+	brne	exchdr_entry_3
+
+	call	default_int_handler
+
+exchdr_entry_3:
+#ifdef LOG_INH_ENTER
+	//
+#endif /* LOG_EXC_ENTER */
+
+	mov		r8, r12
+	popm	r12							/* srの保存先を復帰 */
+	icall	r8
+
+#ifdef LOG_INH_LEAVE
+	//
+#endif /* LOG_EXC_ENTER */
+
+ret_exc:
+	lda.w	r9, int_cnt					/* 戻り先が割込みモードなら */
+	ld.w	r8, r9[0]
+	sub		r8, 1
+	st.w	r9[0], r8
+	brne	ret_exc_1_d					/*           すぐにリターン */
+
+	/*
+	 *  カーネル管理の割込みを禁止し，マスタモードに戻す．この時点では，
+	 *  CPUロック状態にはならない（lock_flagとsaved_iipmは更新しない）．
+	 *
+	 *  reqflgをチェックする前に割込みを禁止するのは，reqflgをチェック
+	 *  した直後に割込みハンドラが起動され，その中でディスパッチが要求
+	 *  された場合に，すぐにディスパッチされないという問題が生じるため
+	 *  である．
+	 */
+	/*
+	 *  このルーチンはカーネル管理のCPU例外から起動されるため，ここでは，
+	 *  割込み優先度マスクがTIPM_LOCKよりも低いと想定できる．
+	 */
+	movh	r9, 0x001E
+	com		r9
+	mfsr	r10, AVR32_SR
+	and		r9, r10
+	movh	r10, IIPM_LOCK_H
+	or		r9, r10
+	mtsr	AVR32_SR, r9
+	lda.w	r9, reqflg
+	ld.w	r8, r9[0]
+	cp.w	r8, 0						/* reqflgがtrueであればret_int_2へ */
+	brne	ret_int_2
+
+ret_exc_1:
+	rete
+
+ret_exc_1_d:
+	rjmp	ret_exc_1

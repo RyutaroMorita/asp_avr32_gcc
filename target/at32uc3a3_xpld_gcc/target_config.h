@@ -109,6 +109,12 @@ extern void		*board_addr;	/* ローカルメモリの先頭アドレス */
 #define VALID_INHNO_DEFINH(inhno)	VALID_INTNO(inhno)
 
 /*
+ *  割込みハンドラ番号とCPU例外ハンドラ番号の範囲の判定
+ */
+#define EXCNO_MAX	64
+#define VALID_EXCNO_DEFEXC(excno)	((0 <= (excno) && (excno) <= EXCNO_MAX))
+
+/*
  *  割込み要求を操作するためのビットパターンを求めるマクロ
  *
  *  シフト演算の遅いプロセッサで，メモリに余裕がある場合には，表を引く
@@ -190,11 +196,12 @@ x_probe_int(INTNO intno)
 extern void x_define_inh(INHNO inhno, FP int_entry);
 
 /*
+ *  CPU例外ハンドラの設定
+ */
+extern void x_define_exc(EXCNO excno, FP exc_entry);
+
+/*
  *  割込み要求ラインの属性の設定
- *
- *  DVE-68K/40のIRCでは，割込み要求ラインの割込み優先度にNMIを指定する
- *  ことができため，-7を与えるとNMIに設定されることとする（ターゲット定
- *  義の拡張）．
  */
 extern void	x_config_int(INTNO intno, ATR intatr, PRI intpri);
 

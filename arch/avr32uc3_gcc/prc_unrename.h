@@ -19,7 +19,7 @@
 #undef call_exit_kernel
 #undef start_r
 #undef ret_int
-#undef exchdr_entry
+//#undef exchdr_entry
 #undef lock_flag
 #undef saved_iipm
 #undef int_sp
@@ -43,7 +43,7 @@
 #undef _call_exit_kernel
 #undef _start_r
 #undef _ret_int
-#undef _exchdr_entry
+//#undef _exchdr_entry
 #undef _lock_flag
 #undef _saved_iipm
 #undef _int_sp

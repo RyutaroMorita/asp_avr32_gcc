@@ -52,11 +52,6 @@
 #define TOPPERS_TARGET_SYSSVC_H
 
 /*
- *  ターゲットシステムのハードウェア資源の定義
- */
-//#include "dve68k.h"
-
-/*
  *  トレースログに関する設定
  */
 #ifdef TOPPERS_ENABLE_TRACE
@@ -66,7 +61,7 @@
 /*
  *  起動メッセージのターゲットシステム名
  */
-#define TARGET_NAME	"AVR32UC3A3-XPLD"
+#define TARGET_NAME	"AT32UC3A3-XPLD"
 
 /*
  *  システムログの低レベル出力のための文字出力
@@ -84,14 +79,6 @@ extern void	target_fput_log(char c);
  *  ログタスクが使用するポートID
  */
 #define LOGTASK_PORTID   SIO_PORTID
-
-/*
- *  シリアルポートのボーレートに関する定義
- *
- *  μPD72001のボーレートジェネレータに設定すべき値．
- */
-#define BRG1_DEF	0x00U		/* 9600bps（上位）*/
-#define BRG2_DEF	0x1eU		/* 9600bps（下位）*/
 
 /*
  *  システムログタスク関連の定数の定義

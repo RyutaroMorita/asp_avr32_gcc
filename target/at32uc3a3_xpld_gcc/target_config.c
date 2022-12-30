@@ -48,6 +48,8 @@
 #include <sil.h>
 #include <asf.h>
 
+FP exc_handler_table[EXCNO_MAX + 1];
+
 /*
  *  プロセッサ識別のための変数（マルチプロセッサ対応）
  */
@@ -73,6 +75,7 @@ usart_early_init()
 void
 target_initialize(void)
 {
+	int i;
 	/*
 	 *  プロセッサ依存の初期化
 	 */
@@ -81,6 +84,10 @@ target_initialize(void)
 	board_init();
 
 	sysclk_init();
+
+	/* CPU例外ハンドラ・テーブルの初期化 */
+	for (i = 0; i < (EXCNO_MAX + 1); i++)
+		exc_handler_table[i] = NULL;
 
 	INTC_init_interrupts();
 
@@ -114,6 +121,14 @@ target_fput_log(char c)
 }
 
 /*
+ *
+ */
+void* target_get_exception_handler(uint32_t excno)
+{
+	return exc_handler_table[excno];
+}
+
+/*
  *  割込みハンドラの設定
  *
  *  ベクトル番号inhnoの割込みハンドラの出入口処理の番地をint_entryに設
@@ -124,6 +139,19 @@ x_define_inh(INHNO inhno, FP int_entry)
 {
 	assert(VALID_INHNO_DEFINH(inhno));
 	INTC_register_interrupt((__int_handler)int_entry, inhno, AVR32_INTC_INT0);
+}
+
+/*
+ *  CPU例外ハンドラの設定
+ *
+ *  ベクトル番号excnoのCPU例外ハンドラの出入口処理の番地をexc_entryに設
+ *  定する．
+ */
+void
+x_define_exc(EXCNO excno, FP exc_entry)
+{
+	assert(VALID_EXCNO_DEFEXC(excno));
+	exc_handler_table[excno] = exc_entry;
 }
 
 /*

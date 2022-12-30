@@ -45,4 +45,10 @@
 #ifndef TOPPERS_PRC_TEST_H
 #define TOPPERS_PRC_TEST_H
 
+#define CPUEXC1				14		/* Data Address (Write) */
+#define RAISE_CPU_EXCEPTION *(volatile int*)(0x1) = 0x11;
+//#define CPUEXC1				7		/* Breakpoint */
+//#define RAISE_CPU_EXCEPTION	Asm("breakpoint");
+//#define CANNOT_RETURN_CPUEXC
+
 #endif /* TOPPERS_PRC_TEST_H */

@@ -18,6 +18,10 @@ void inthdr_entry()
 {
 }
 
+void exchdr_entry()
+{
+}
+
 const SIZE		_kernel_istksz = 0;
 
 STK_T *const	_kernel_istk = NULL;
