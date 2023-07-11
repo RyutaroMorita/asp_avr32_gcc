@@ -124,13 +124,6 @@ extern void		*board_addr;	/* ローカルメモリの先頭アドレス */
 #define DGA_INT_BITPAT(intno)	(1U << (32U - (intno)))
 
 /*
- *  レベルトリガ／エッジトリガが設定できるかの判定用定数
- */
-#define DGA_INT_TRG_CONF	(0xe0000000U)	/* いずれにも設定できる */
-#define DGA_INT_TRG_LEVEL	(0x108f00feU)	/* レベルトリガに固定 */
-#define DGA_INT_TRG_EDGE	(0x0e70ff00U)	/* エッジトリガに固定 */
-
-/*
  *  割込み属性が設定されているかを判別するための変数（kernel_cfg.c）
  */
 extern const uint32_t	bitpat_cfgint;
@@ -171,7 +164,6 @@ x_enable_int(INTNO intno)
 Inline void
 x_clear_int(INTNO intno)
 {
-//	dga_write((void *) TADR_DGA_CSR23, DGA_INT_BITPAT(intno));
 }
 
 #define t_clear_int(intno)		x_clear_int(intno)
@@ -183,7 +175,6 @@ x_clear_int(INTNO intno)
 Inline bool_t
 x_probe_int(INTNO intno)
 {
-//	return((dga_read((void *) TADR_DGA_CSR20) & DGA_INT_BITPAT(intno)) != 0U);
 	return true;
 }
 
@@ -216,10 +207,6 @@ extern void	x_config_int(INTNO intno, ATR intatr, PRI intpri);
 Inline void
 i_begin_int(INTNO intno)
 {
-	if ((DGA_INT_BITPAT(intno) & (DGA_INT_TRG_CONF | DGA_INT_TRG_EDGE))
-																!= 0U) {
-		i_clear_int(intno);
-	}
 }
 
 /*
@@ -249,12 +236,6 @@ extern void	target_initialize(void);
 extern void	target_exit(void) NoReturn;
 
 #endif /* TOPPERS_MACRO_ONLY */
-
-/*
- *  微少時間待ちのための定義（本来はSILのターゲット依存部）
- */
-#define SIL_DLY_TIM1	420
-#define SIL_DLY_TIM2	90
 
 /*
  *  使用するシリアルポートID

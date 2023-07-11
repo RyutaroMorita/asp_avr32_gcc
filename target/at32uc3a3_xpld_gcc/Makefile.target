@@ -64,7 +64,7 @@ SYSSVC_COBJS := $(SYSSVC_COBJS) target_serial.o
 #
 #  コンフィギュレータ関係の変数の定義
 #
-CFG_TABS := $(CFG_TABS) --cfg1-def-table $(TARGETDIR)/target_def.csv
+#CFG_TABS := $(CFG_TABS) --cfg1-def-table $(TARGETDIR)/target_def.csv
 
 #
 #  トレースログ記録のサンプルコードに関する定義
